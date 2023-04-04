@@ -56,7 +56,8 @@ class _CartViewState extends State<CartView> {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: ListTile(
                     onTap: () {},
-                    contentPadding: EdgeInsets.symmetric(vertical: 8,horizontal: 6),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 6),
                     tileColor: AppColors.primaryColor,
                     leading: Container(
                       width: 100,
@@ -89,9 +90,8 @@ class _CartViewState extends State<CartView> {
                         color: AppColors.blackColor,
                       ),
                     ),
-                    trailing: IconButton(onPressed: () {
-
-                    }, icon: Icon(Icons.close_rounded)),
+                    trailing: IconButton(
+                        onPressed: () {}, icon: Icon(Icons.close_rounded)),
                   ),
                 );
               },
