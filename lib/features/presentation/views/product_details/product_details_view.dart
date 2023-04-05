@@ -41,6 +41,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            sizeVer(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,

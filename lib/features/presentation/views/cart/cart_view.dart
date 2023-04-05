@@ -28,6 +28,7 @@ class _CartViewState extends State<CartView> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(children: [
+          sizeVer(20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
