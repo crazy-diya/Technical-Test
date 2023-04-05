@@ -3,8 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:technical_test/utils/app_colors.dart';
 import 'package:technical_test/utils/app_constants.dart';
 import 'package:technical_test/utils/navigation_routes.dart';
+import 'package:technical_test/core/services/dependency_injection.dart' as di;
 
-void main() {
+void main() async {
+  await di.init();
   runApp(const MyApp());
 }
 

@@ -30,7 +30,7 @@ class Routes {
       case Routes.kProductDetails:
         return PageTransition(
           child: ProductDetailsView(
-            productDetailsEntity: settings.arguments as ProductDetailsEntity,
+            datum: settings.arguments as Datum,
           ),
           type: PageTransitionType.fade,
           settings: const RouteSettings(name: Routes.kHomeView),

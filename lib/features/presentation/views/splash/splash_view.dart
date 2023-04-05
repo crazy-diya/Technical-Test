@@ -28,7 +28,8 @@ class _SplashViewState extends State<SplashView> {
     super.initState();
     _timer = Timer(const Duration(seconds: 2), () {
       loading = false;
-      Navigator.pushNamed(context, Routes.kHomeView);
+      Navigator.pushNamedAndRemoveUntil(
+          context, Routes.kHomeView, (route) => false);
     });
   }
 
@@ -37,6 +38,7 @@ class _SplashViewState extends State<SplashView> {
     // TODO: implement dispose
     super.dispose();
     _timer!.cancel();
+    loading = false;
   }
 
   @override
@@ -48,8 +50,7 @@ class _SplashViewState extends State<SplashView> {
             width: double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage(AppImages.imgSplashBG),
-                  fit: BoxFit.cover),
+                  image: AssetImage(AppImages.imgSplashBG), fit: BoxFit.cover),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,12 +105,12 @@ class _SplashViewState extends State<SplashView> {
           ),
           loading == true
               ? const Align(
-            alignment: Alignment.center,
-            child: CircularProgressIndicator(
-              backgroundColor: AppColors.primaryColor,
-              strokeWidth: 2,
-            ),
-          )
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(
+                    backgroundColor: AppColors.primaryColor,
+                    strokeWidth: 2,
+                  ),
+                )
               : const SizedBox.shrink(),
         ],
       ),

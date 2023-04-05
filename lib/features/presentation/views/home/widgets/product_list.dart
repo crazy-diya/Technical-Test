@@ -6,7 +6,9 @@ import '../../../../../utils/app_colors.dart';
 import '../../widgets/common_widgets.dart';
 
 class ProductList extends StatefulWidget {
-  const ProductList({Key? key}) : super(key: key);
+  ProductDetailsEntity productDetailsEntity;
+
+  ProductList({Key? key, required this.productDetailsEntity}) : super(key: key);
 
   @override
   State<ProductList> createState() => _ProductListState();
@@ -18,29 +20,14 @@ class _ProductListState extends State<ProductList> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 10,
+      itemCount: widget.productDetailsEntity.data.length,
       itemBuilder: (context, item) {
         return InkWell(
           onTap: () {
             Navigator.pushNamed(
               context,
               Routes.kProductDetails,
-              arguments: ProductDetailsEntity(
-                result: "ok",
-                data: [
-                  Datum(
-                      id: "id",
-                      sku: "sku",
-                      name: "name",
-                      brandName: "brandName",
-                      mainImage: "mainImage",
-                      price: Price(amount: "", currency: ""),
-                      sizes: ["sizes"],
-                      stockStatus: "stockStatus",
-                      colour: "colour",
-                      description: "description"),
-                ],
-              ),
+              arguments: widget.productDetailsEntity.data[item],
             );
           },
           child: Card(
@@ -59,14 +46,14 @@ class _ProductListState extends State<ProductList> {
                   Container(
                     width: 66,
                     height: 66,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(
-                            "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/media/ce1fbd10feb64bd39816d03a45fa5346_35892701_fr_puma_sc7.jpeg",
-                          ),
+                              widget.productDetailsEntity.data[item].mainImage),
                           fit: BoxFit.fill,
                         ),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
                   ),
                   sizeHor(25),
                   Column(
@@ -74,14 +61,14 @@ class _ProductListState extends State<ProductList> {
                     children: [
                       Row(
                         children: [
-                          const SizedBox(
+                          SizedBox(
                             width: 100,
                             child: Text(
-                              "PUMA Soleil v2 scvdhvjhcvjhvh",
+                              widget.productDetailsEntity.data[item].name,
                               softWrap: true,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: AppColors.fontBlackColor,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -89,9 +76,9 @@ class _ProductListState extends State<ProductList> {
                             ),
                           ),
                           sizeHor(10),
-                          const Text(
-                            "( 80.00 GBP )",
-                            style: TextStyle(
+                          Text(
+                            "(${widget.productDetailsEntity.data[item].price.amount} ${widget.productDetailsEntity.data[item].price.currency})",
+                            style: const TextStyle(
                               color: AppColors.redColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w900,
@@ -101,12 +88,12 @@ class _ProductListState extends State<ProductList> {
                       ),
                       SizedBox(
                         width: 200,
-                        child: const Text(
-                          "Simple and clean, the Soleil v2 exhibits iconic PUMA heritage.Synthetic upper with french piping embellishment and bold ghilles.Rubber outsole supplies durability and traction.",
+                        child: Text(
+                          widget.productDetailsEntity.data[item].description,
                           softWrap: true,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppColors.fontGrayColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
@@ -119,9 +106,9 @@ class _ProductListState extends State<ProductList> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Text(
-                        "IN STOCK",
-                        style: TextStyle(
+                      Text(
+                        widget.productDetailsEntity.data[item].stockStatus,
+                        style: const TextStyle(
                           color: AppColors.blueColor,
                           fontSize: 14,
                           fontWeight: FontWeight.w900,

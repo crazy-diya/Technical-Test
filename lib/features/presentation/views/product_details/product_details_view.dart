@@ -9,19 +9,27 @@ import 'package:technical_test/utils/navigation_routes.dart';
 import '../../../../utils/app_images.dart';
 
 class ProductDetailsView extends StatefulWidget {
-  final ProductDetailsEntity? productDetailsEntity;
+  final Datum? datum;
 
-  const ProductDetailsView({Key? key, this.productDetailsEntity})
-      : super(key: key);
+  const ProductDetailsView({Key? key, this.datum}) : super(key: key);
 
   @override
   State<ProductDetailsView> createState() => _ProductDetailsViewState();
 }
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
-  static List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+  static List<String> list = <String>[];
 
-  String dropdownValue = list.first;
+  String? dropdownValue;
+  int quantity = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    list = widget.datum!.sizes;
+    dropdownValue = list.first;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +69,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                   ),
                 ),
                 InkWell(
-                  onTap: ()=>Navigator.pushNamed(context, Routes.kCartView),
+                  onTap: () => Navigator.pushNamed(context, Routes.kCartView),
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
@@ -90,14 +98,12 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             Container(
               width: width * 0.7,
               height: height * 0.3,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(
-                      "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/media/ce1fbd10feb64bd39816d03a45fa5346_35892701_fr_puma_sc7.jpeg",
-                    ),
+                    image: NetworkImage(widget.datum!.mainImage),
                     fit: BoxFit.fill,
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -105,7 +111,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                   children: [
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                           child: Text(
                             "SKU",
@@ -118,8 +124,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         ),
                         Expanded(
                           child: Text(
-                            "10200",
-                            style: TextStyle(
+                            widget.datum!.sku,
+                            style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
                               color: AppColors.fontGrayColor,
@@ -131,7 +137,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                     sizeVer(10),
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                           child: Text(
                             "Name",
@@ -144,8 +150,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         ),
                         Expanded(
                           child: Text(
-                            "Nike Air Relentless 4 Mens Running Shoes",
-                            style: TextStyle(
+                            widget.datum!.name,
+                            style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
                               color: AppColors.fontGrayColor,
@@ -157,7 +163,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                     sizeVer(10),
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                           child: Text(
                             "Brand Name",
@@ -170,8 +176,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         ),
                         Expanded(
                           child: Text(
-                            "Nike",
-                            style: TextStyle(
+                            widget.datum!.brandName,
+                            style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
                               color: AppColors.fontGrayColor,
@@ -183,7 +189,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                     sizeVer(10),
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                           child: Text(
                             "Sizes",
@@ -218,7 +224,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                     sizeVer(10),
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                           child: Text(
                             "Price",
@@ -231,8 +237,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         ),
                         Expanded(
                           child: Text(
-                            "270.00 GBP",
-                            style: TextStyle(
+                            "${widget.datum!.price.amount} ${widget.datum!.price.currency}",
+                            style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
                               color: AppColors.fontGrayColor,
@@ -244,7 +250,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                     sizeVer(10),
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                           child: Text(
                             "Stock Status",
@@ -257,8 +263,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         ),
                         Expanded(
                           child: Text(
-                            "IN STOCK",
-                            style: TextStyle(
+                            widget.datum!.stockStatus,
+                            style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
                               color: AppColors.fontGrayColor,
@@ -270,7 +276,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                     sizeVer(10),
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                           child: Text(
                             "Description",
@@ -283,8 +289,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         ),
                         Expanded(
                           child: Text(
-                            "Hit the tracks in these Nike Air Relentless 4 featuring flexible forefoot sole and Reslon midsole underfoot cushioning for superior comfort at each step. The ridged outsole ensures excellent traction while the cushioned ankle collar and the anatomically shaped insole guarantee great support for the whole foot. The mesh upper panels provide breathability and airflow within the shoe.",
-                            style: TextStyle(
+                            widget.datum!.description,
+                            style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
                               color: AppColors.fontGrayColor,
@@ -297,7 +303,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                     sizeVer(10),
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                           child: Text(
                             "Colour",
@@ -310,8 +316,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         ),
                         Expanded(
                           child: Text(
-                            "Blue",
-                            style: TextStyle(
+                            widget.datum!.colour,
+                            style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
                               color: AppColors.fontGrayColor,
@@ -323,7 +329,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                     sizeVer(10),
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                           child: Text(
                             "Quantity",
@@ -336,13 +342,17 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         ),
                         Expanded(
                           child: TextFormField(
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: "Enter Quantity 1,2,3 ..",
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.zero,
                             ),
                             keyboardType: TextInputType.number,
-                            onChanged: (value) {},
+                            onChanged: (value) {
+                              setState(() {
+                                quantity = int.parse(value);
+                              });
+                            },
                           ),
                         ),
                       ],
@@ -353,13 +363,27 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             ),
             InkWell(
               onTap: () {
-                AppConstants.cartList.add(widget.productDetailsEntity!);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Successfully Add item to the Cart!"),
-                  ),
-                );
-                Navigator.pop(context);
+                if (quantity >= 1) {
+                  Datum d = widget.datum!;
+                  d.quantity = quantity;
+                  d.size = dropdownValue;
+                  AppConstants.cartList.add(d);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Successfully Add item to the Cart!"),
+                    ),
+                  );
+                  Navigator.pop(context);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        "Please Enter Quantity!",
+                        style: TextStyle(color: AppColors.redColor),
+                      ),
+                    ),
+                  );
+                }
               },
               child: Align(
                 alignment: Alignment.center,

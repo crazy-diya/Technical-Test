@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-ProductDetailsEntity productDetailsEntityFromJson(String str) => ProductDetailsEntity.fromJson(json.decode(str));
+ProductDetailsEntity productDetailsEntityFromJson(String str) =>
+    ProductDetailsEntity.fromJson(json.decode(str));
 
-String productDetailsEntityToJson(ProductDetailsEntity data) => json.encode(data.toJson());
+String productDetailsEntityToJson(ProductDetailsEntity data) =>
+    json.encode(data.toJson());
 
 class ProductDetailsEntity {
   ProductDetailsEntity({
@@ -17,30 +19,32 @@ class ProductDetailsEntity {
   String result;
   List<Datum> data;
 
-  factory ProductDetailsEntity.fromJson(Map<String, dynamic> json) => ProductDetailsEntity(
-    result: json["result"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-  );
+  factory ProductDetailsEntity.fromJson(Map<String, dynamic> json) =>
+      ProductDetailsEntity(
+        result: json["result"],
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "result": result,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-  };
+        "result": result,
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+      };
 }
 
 class Datum {
-  Datum({
-    required this.id,
-    required this.sku,
-    required this.name,
-    required this.brandName,
-    required this.mainImage,
-    required this.price,
-    required this.sizes,
-    required this.stockStatus,
-    required this.colour,
-    required this.description,
-  });
+  Datum(
+      {required this.id,
+      required this.sku,
+      required this.name,
+      required this.brandName,
+      required this.mainImage,
+      required this.price,
+      required this.sizes,
+      required this.stockStatus,
+      required this.colour,
+      required this.description,
+      this.quantity,
+      this.size});
 
   final String id;
   final String sku;
@@ -52,32 +56,34 @@ class Datum {
   final String stockStatus;
   final String colour;
   final String description;
+  int? quantity;
+  String? size;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    sku: json["SKU"],
-    name: json["name"],
-    brandName: json["brandName"],
-    mainImage: json["mainImage"],
-    price: Price.fromJson(json["price"]),
-    sizes: List<String>.from(json["sizes"].map((x) => x)),
-    stockStatus: json["stockStatus"],
-    colour: json["colour"],
-    description: json["description"],
-  );
+        id: json["id"],
+        sku: json["SKU"],
+        name: json["name"],
+        brandName: json["brandName"],
+        mainImage: json["mainImage"],
+        price: Price.fromJson(json["price"]),
+        sizes: List<String>.from(json["sizes"].map((x) => x)),
+        stockStatus: json["stockStatus"],
+        colour: json["colour"],
+        description: json["description"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "SKU": sku,
-    "name": name,
-    "brandName": brandName,
-    "mainImage": mainImage,
-    "price": price.toJson(),
-    "sizes": List<dynamic>.from(sizes.map((x) => x)),
-    "stockStatus": stockStatus,
-    "colour": colour,
-    "description": description,
-  };
+        "id": id,
+        "SKU": sku,
+        "name": name,
+        "brandName": brandName,
+        "mainImage": mainImage,
+        "price": price.toJson(),
+        "sizes": List<dynamic>.from(sizes.map((x) => x)),
+        "stockStatus": stockStatus,
+        "colour": colour,
+        "description": description,
+      };
 }
 
 class Price {
@@ -90,12 +96,12 @@ class Price {
   String currency;
 
   factory Price.fromJson(Map<String, dynamic> json) => Price(
-    amount: json["amount"],
-    currency: json["currency"],
-  );
+        amount: json["amount"],
+        currency: json["currency"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "amount": amount,
-    "currency": currency,
-  };
+        "amount": amount,
+        "currency": currency,
+      };
 }

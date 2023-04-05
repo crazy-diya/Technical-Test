@@ -12,10 +12,18 @@ class CartView extends StatefulWidget {
 }
 
 class _CartViewState extends State<CartView> {
+  double tot = 0.00;
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+
+    AppConstants.cartList.forEach((element) {
+      setState(() {
+        tot = (double.parse(element.price.amount) * element.quantity!) + tot;
+      });
+    });
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -62,17 +70,16 @@ class _CartViewState extends State<CartView> {
                     leading: Container(
                       width: 100,
                       height: 100,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                           image: DecorationImage(
                             image: NetworkImage(
-                              "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/media/ce1fbd10feb64bd39816d03a45fa5346_35892701_fr_puma_sc7.jpeg",
-                            ),
+                                AppConstants.cartList[index].mainImage),
                             fit: BoxFit.cover,
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                     ),
                     title: Text(
-                      "KNINike Air Relentless 4 Mens Running ShoesTE",
+                      AppConstants.cartList[index].name,
                       textAlign: TextAlign.justify,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -83,7 +90,7 @@ class _CartViewState extends State<CartView> {
                       ),
                     ),
                     subtitle: Text(
-                      "100400.00 DGP",
+                      "${AppConstants.cartList[index]!.price.amount} ${AppConstants.cartList[index].price.currency} * ${AppConstants.cartList[index].quantity}",
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 22,
@@ -91,7 +98,11 @@ class _CartViewState extends State<CartView> {
                       ),
                     ),
                     trailing: IconButton(
-                        onPressed: () {}, icon: Icon(Icons.close_rounded)),
+                        onPressed: () {
+                          AppConstants.cartList.remove(index);
+                          setState(() {});
+                        },
+                        icon: Icon(Icons.close_rounded)),
                   ),
                 );
               },
@@ -102,7 +113,7 @@ class _CartViewState extends State<CartView> {
             child: Align(
               alignment: Alignment.centerRight,
               child: Text(
-                "100400.00 DGP",
+                "Total is :  ${tot.toString()}",
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                   fontSize: 22,
